@@ -1,4 +1,4 @@
-# WCS PHP Checkpoint
+# WCS JS Checkpoint
 
 ![](https://static.tvtropes.org/pmwiki/pub/images/potc_monocle2.jpg)
 

@@ -223,7 +223,7 @@ export default function Home() {
 
               <li>
                 <p>
-                  <strong>Bonus :</strong>Display an "endgame" page when Jack
+                  <strong>Bonus :</strong> Display an "endgame" page when Jack
                   find the treasure ;)
                 </p>
               </li>
