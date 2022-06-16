@@ -207,10 +207,14 @@ export default function Home() {
                 <p>
                   Create a <code>checkTreasure()</code> service. The middleware
                   shoudl read `req.params.x` and `req.params.y`, and check if
-                  the boat is on the tile with the treasure. Set `req.jack.rich`
-                  to <em>true</em> or <em>false</em> accordingly, and always
-                  continue to the next middleware.
+                  the boat is on the tile with the treasure. Set
+                  `req.isJackRich` to <em>true</em> or <em>false</em>{" "}
+                  accordingly, and always continue to the next middleware.
                 </p>
+                <details>
+                  <summary className="hint">Hint: </summary>Be sure to read the{" "}
+                  <code>has_treasure</code> property from the tile table.
+                </details>
               </li>
 
               <li>
