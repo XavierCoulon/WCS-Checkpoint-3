@@ -206,7 +206,7 @@ export default function Home() {
               <li>
                 <p>
                   Create a <code>checkTreasure()</code> service. The middleware
-                  shoudl read `req.params.x` and `req.params.y`, and check if
+                  should read `req.params.x` and `req.params.y`, and check if
                   the boat is on the tile with the treasure. Set
                   `req.isJackRich` to <em>true</em> or <em>false</em>{" "}
                   accordingly, and always continue to the next middleware.
