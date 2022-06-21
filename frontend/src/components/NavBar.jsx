@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useCaribbean } from "@contexts/CaribbeanContext";
+import api from "@services/api";
 
 function NavBar() {
-  const { reload } = useCaribbean();
+  const { updateBoat } = useCaribbean();
+  const navigate = useNavigate();
 
   return (
     <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -34,7 +36,19 @@ function NavBar() {
             type="button"
             className="btn mx-2"
             onClick={() => {
-              reload();
+              api
+                .get("/boat/start")
+                .then((response) => {
+                  if (response.status === 200) {
+                    updateBoat(response.data);
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                })
+                .finally(() => {
+                  navigate("/map");
+                });
             }}
           >
             Start

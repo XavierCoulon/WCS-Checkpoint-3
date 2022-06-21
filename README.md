@@ -12,9 +12,14 @@ Run the project and read the instructions.
 
 3. Move into the `backend` directory and copy the `.env.sample` file to create your `.env` file.
    **This one is not committed to the shared repository.**
-   Fill your `.env` with your database credentials. The `DB_NAME` can stay as **checkpoint3**.
+   Fill your backend `.env` with your database credentials. The `DB_NAME` can stay as **checkpoint3**.
+   You may have to change `APP_PORT` if the port 5000 is not available.
 
-4. Execute the following commands from the root folder of the project to start:
+4. Move into the `frontend` directory and copy the `.env.sample` file to create your `.env` file.
+   **This one is not committed to the shared repository.**
+   Fill your frontend `.env` with the url of your backend. In particular, adapt the port if your port 5000 is not available.
+
+5. Execute the following commands from the root folder of the project to start:
 
 ```bash
 # Install dependencies
