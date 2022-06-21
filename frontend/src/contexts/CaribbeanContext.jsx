@@ -8,28 +8,21 @@ const caribbeanContext = createContext();
 export function CaribbeanProvider({ children }) {
   const { Provider } = caribbeanContext;
 
-  const [isUpToDate, setIsUpToDate] = useState(false);
   const [boat, setBoat] = useState();
   const [tiles, setTiles] = useState([]);
 
   useEffect(() => {
-    if (!isUpToDate) {
-      Promise.all([api.get("/tiles"), api.get("/boat")]).then((responses) => {
-        const [tilesResponse, boatResponse] = responses;
+    Promise.all([api.get("/tiles"), api.get("/boat")]).then((responses) => {
+      const [tilesResponse, boatResponse] = responses;
 
-        setIsUpToDate(true);
-        setTiles(tilesResponse.data);
-        setBoat(boatResponse.data);
-      });
-    }
-  }, [isUpToDate]);
+      setTiles(tilesResponse.data);
+      setBoat(boatResponse.data);
+    });
+  }, []);
 
-  const reload = () => setIsUpToDate(false);
   const updateBoat = (partialBoat) => setBoat({ ...boat, ...partialBoat });
 
-  return (
-    <Provider value={{ reload, boat, updateBoat, tiles }}>{children}</Provider>
-  );
+  return <Provider value={{ boat, updateBoat, tiles }}>{children}</Provider>;
 }
 
 CaribbeanProvider.propTypes = {
