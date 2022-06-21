@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { useCaribbean } from "@contexts/CaribbeanContext";
 import api from "@services/api";
+import Map from "./Map";
 
 function MoveBoat() {
   const navigate = useNavigate();
@@ -25,11 +26,7 @@ function MoveBoat() {
       });
   }, [x, y]);
 
-  return (
-    <div className="container-fluid">
-      <h1>Moving...</h1>
-    </div>
-  );
+  return <Map />;
 }
 
 export default MoveBoat;
