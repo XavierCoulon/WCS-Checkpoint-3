@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import compassImage from "@assets/compass.png";
-import jackImage from "@assets/jack.gif";
-import sparrowImage from "@assets/sparrow.jpg";
+import compassImage from "../assets/compass.png";
+import jackImage from "../assets/jack.gif";
+import sparrowImage from "../assets/sparrow.jpg";
 
 export default function Home() {
   return (
