@@ -191,10 +191,15 @@ export default function Home() {
                   need multiple SQL requests for this step.
                 </p>
                 <details>
-                  <summary className="hint">Hint: </summary>Warning, only one
+                  <summary className="hint">Hint: </summary>Add a method{" "}
+                  <code>hideTreasure</code> in TileManager. Warning, only one
                   treasure can be on the map, don't forget to remove the old
                   ones from the map <strong>before</strong> putting one in
-                  another tile ;)
+                  another tile. You may use{" "}
+                  <a href="https://thewebdev.info/2022/03/05/how-to-run-multiple-statements-in-one-query-with-node-mysql/">
+                    multiple update statements separated with a semicolon
+                  </a>{" "}
+                  in your query ;)
                 </details>
                 <details>
                   <summary className="hint">Hint 2: </summary>On the front side,
