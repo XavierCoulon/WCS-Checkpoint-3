@@ -67,48 +67,96 @@ export default function Home() {
 
               <li>
                 <p>
-                  Look at the navbar, there is a <Link to="/map">Map</Link> link
-                  (/map url). The Black Pearl can navigate on this map, which is
-                  built with tiles. Each tile has coordinates (x, y) and a type
-                  (sea, port, island). The Black Pearl (one boat entity) also
-                  has coordinates (x, y), so it can be displayed on a chosen
-                  tile of the map. X is for the horizontal position and Y for
-                  the vertical position.
+                  Jack likes to hear music while navigating. He wants to create
+                  his own app to handle albums and tracks. Help him by creating
+                  the entity relationship diagram (MCD) for the following
+                  features:
                 </p>
-                <blockquote className="pl-4">
-                  On the map, you can move the boat with the{" "}
-                  <em>/boat/move/x/y</em> route (it already exists : x and y
-                  should be coordinates). This react route will call the
-                  corresponding express route, which will execute the{" "}
-                  <code>move()</code> method of the BoatController. As you can
-                  see in the code, you just have to use the route{" "}
-                  <Link to="/boat/move/2/2">/boat/move/2/2</Link> and the Black
-                  Pearl will go to the right tile.
-                </blockquote>
+                <ul>
+                  <li>
+                    Jack needs to be able to retrieve the full list of albums.
+                  </li>
+                  <li>
+                    Each album has a title, a genre, a picture and an artist.
+                  </li>
+                  <li>
+                    An album can contain several tracks, but should at least
+                    contain one.
+                  </li>
+                  <li>A track belongs to one and only one album.</li>
+                  <li>Each track has a title and a youtube url.</li>
+                </ul>
+                <p>Save a picture of your diagram into this repository.</p>
               </li>
 
               <li>
                 <p>
-                  The <em>/boat/move/x/y</em> route is cool. However, it is more
-                  like a teleport than a real move...
+                  Look at the navbar, there is a link to the{" "}
+                  <Link to="/map">Map</Link>. Boats can navigate on this map,
+                  which is built with tiles. Except right now the map renders
+                  neitheir boats nor tiles. Create 2 routes in{" "}
+                  <code>backend/src/router.js</code>:
+                </p>
+                <ul>
+                  <li>
+                    <code>GET /tiles</code>: send all tiles from the database.
+                  </li>
+                  <li>
+                    <code>GET /boats</code>: send all boats from the database.
+                  </li>
+                </ul>
+                <p>
+                  Nothing to do in the frontend side. It's already fetching your
+                  routes. Once they are functional, you should see the map tiles
+                  and some boats (you may need to reload the page in your
+                  browser).
+                </p>
+              </li>
+
+              <li>
+                <p>
+                  You're only interested to follow the Black Pearl. Create a{" "}
+                  <code>findByName(name)</code> method in{" "}
+                  <code>backend/src/models/BoatManager.js</code>: the method
+                  should select only the boats with the given name.
                 </p>
                 <p>
-                  In Map page, add four links to allow the user to move the 4
-                  possible ways : north, south, east or west. Put your links in
-                  the div className "navigation" (it already exists). Of course,
-                  the links should move the boat in the right direction.
-                </p>
-                <p>
-                  Indeed, if the boat is heading east, it must move to the
-                  right. Therefore, its position in X will increase by 1 and its
-                  position in Y will remain unchanged. On the other hand, if the
-                  boat is heading south, it will visually descend on the map and
-                  there, its X position remains the same but its Y position will
-                  increase.
+                  The frontend is requesting the path{" "}
+                  <code>/boats?name=Black Pearl</code> to get the boats. Modify
+                  your backend route <code>GET /boats</code> to use your{" "}
+                  <code>findByName</code> method.
                 </p>
                 <details>
-                  <summary className="hint">Hint: </summary>Add conditional
-                  rendering to display the links only when the boat is defined.
+                  <summary className="hint">Hint: </summary>Try to{" "}
+                  <code>console.warn</code> the value of <code>req.query</code>{" "}
+                  in the handler of your route.
+                </details>
+              </li>
+
+              <li>
+                <p>
+                  Create a route to update a boat. Here is a request sample your
+                  route should be able to handle:
+                </p>
+                <blockquote>
+                  <code>
+                    PUT /boats/42
+                    <br />
+                    Content-type: application/json
+                    <br />
+                    <br />
+                    {"{"} "coord_x": 5, "coord_y": 6 {"}"}
+                  </code>
+                </blockquote>
+                <details>
+                  <summary className="hint">Hint: </summary>Your route should be
+                  declared using the put verb and for the path{" "}
+                  <code>"/boats/:id"</code>.
+                </details>
+                <details>
+                  <summary className="hint">Hint 2: </summary>You can retrieve
+                  the id through <code>req.params</code> and coordinates through{" "}
+                  <code>req.body</code>.
                 </details>
               </li>
 
@@ -117,15 +165,17 @@ export default function Home() {
                   Right now, if you move your boat to a nonexistent tile, the
                   boat just disappears and there is no error message. To prevent
                   Jack from getting lost, you will have to prevent moving
-                  outside the map. Create a <em>tileExists.js</em> file in the{" "}
-                  <em>backend/src/services</em> folder. The file should export a
-                  middleware (it takes req, res and next as arguments). It
-                  should test if the tile with the given coordinates
-                  (`req.params.x` and `req.params.y`) exists or not. If the tile
+                  outside the map. Create a <code>tileExists.js</code> file in
+                  the <code>backend/src/services</code> folder. The file should
+                  export a middleware (it takes req, res and next as arguments).
+                  It should test if a tile with the given coordinates (
+                  <code>req.body.coord_x</code> and{" "}
+                  <code>req.body.coord_y</code>) exists or not. If the tile
                   exists, continue to the next middleware. If the tile doesn't
                   exist, send back an error status (422). Use this new
-                  middleware in the <em>/boat/move/x/y</em> route, to prevent
-                  the boat from moving if the destination tile does not exist.
+                  middleware in the <code>PUT /boats/:id</code> route, to
+                  prevent the boat from moving if the destination tile does not
+                  exist.
                 </p>
                 <details>
                   <summary className="hint">Hint: </summary>Use TileManager in
@@ -136,23 +186,33 @@ export default function Home() {
                   <summary className="hint">Hint 2: </summary>If you have
                   difficulties using TileManager, you can check the X coordinate
                   is between 0 and 11 (included) and the Y coordinate is between
-                  0 and 5 (included).
+                  0 and 5 (included). outside the server.
                 </details>
               </li>
 
               <li>
                 <p>
-                  In the Map page, in the <code>div</code> with the className
-                  "infos", add the following information about the boat :
+                  In the Map page, in the <em>Information</em> panel, you should
+                  see the coordinates of the boat. Modify the SQL request in
+                  your <code>findByName</code> method so it selects the type of
+                  the tiles associated to the boats. A tile is associated to a
+                  boat if they have the same coordinates.
                 </p>
-                <ul>
-                  <li>its coordinates (`coord_x` and `coord_y`)</li>
-                  <li>the type of tile where the boat currently is</li>
-                </ul>
+                <p>
+                  Once your request is upgraded, you should see the type of the
+                  tile under the Black Pearl in the Information of the Map page.
+                </p>
                 <details>
-                  <summary className="hint">Hint: </summary>In the Map page,
-                  search in the `tiles` array for a tile with the same
-                  coordinates as the boat.
+                  <summary className="hint">Hint: </summary>You should use a{" "}
+                  <a href="https://stackoverflow.com/questions/16597660/sql-join-on-multiple-columns-in-same-tables">
+                    join on multiple columns
+                  </a>
+                  . Be sure to explicitly select the id, the coords and the name
+                  of the boat.
+                </details>
+                <details>
+                  <summary className="hint">Hint2: </summary>Join on{" "}
+                  <code>coord_x</code> AND <code>coord_y</code>.
                 </details>
               </li>
 
@@ -160,21 +220,42 @@ export default function Home() {
                 <p>
                   Add the property <code>has_treasure</code> (a boolean) to the
                   tile entity. It will be <em>not nullable</em> and the default
-                  value will be <em>false</em>. This property should{" "}
-                  <strong>never</strong> be shared outside the server. It will
-                  allow to know if the treasure is on a tile or not. Don't
-                  forget to use the migrate command to update your database.
+                  value will be <em>false</em>. It will allow to know if the
+                  treasure is on a tile or not. Don't forget to use the migrate
+                  command to update your database. This property should be
+                  displayed as well in the Information of the Map page.
                 </p>
               </li>
 
               <li>
                 <p>
-                  In TileManager, create a <code>getRandomIsland()</code>{" "}
-                  method. It should return a <strong>random</strong> tile with{" "}
-                  <strong>island</strong> type.
+                  <strong>Bonus :</strong> Create a <code>POST /games</code>{" "}
+                  route to start a new game. This means:
+                </p>
+                <ul>
+                  <li>
+                    Putting back the Pearl to its original position (1, 1).
+                  </li>
+                  <li>
+                    Reset <code>has_treasure</code> to <em>false</em> on every
+                    tile.
+                  </li>
+                  <li>Hide the treasure on a random island.</li>
+                </ul>
+                <p>
+                  When ready to play, hit the <em>Start</em> button in the
+                  navigation bar.
                 </p>
                 <details>
-                  <summary className="hint">Hint: </summary>Look at{" "}
+                  <summary className="hint">Hint: </summary>Add a method{" "}
+                  <code>hideTreasure</code> in TileManager. You may use{" "}
+                  <a href="https://thewebdev.info/2022/03/05/how-to-run-multiple-statements-in-one-query-with-node-mysql/">
+                    multiple update statements separated with a semicolon
+                  </a>{" "}
+                  in your query ;)
+                </details>
+                <details>
+                  <summary className="hint">Hint2: </summary>Look at{" "}
                   <a href="https://www.petefreitag.com/item/466.cfm">
                     "SQL to Select a random row from a database table"
                   </a>
@@ -184,56 +265,19 @@ export default function Home() {
 
               <li>
                 <p>
-                  In BoatController, create a <code>start()</code> method
-                  (associated to a <em>/boat/start</em> route) which launches a
-                  new game. The method must reset the boat's coordinates to (0,
-                  0). It also must put the treasure on a random island. You will
-                  need multiple SQL requests for this step.
+                  <strong>Bonus :</strong> Create a winning page, and redirect
+                  to it when Jack finds the treasure.
                 </p>
                 <details>
-                  <summary className="hint">Hint: </summary>Add a method{" "}
-                  <code>hideTreasure</code> in TileManager. Warning, only one
-                  treasure can be on the map, don't forget to remove the old
-                  ones from the map <strong>before</strong> putting one in
-                  another tile. You may use{" "}
-                  <a href="https://thewebdev.info/2022/03/05/how-to-run-multiple-statements-in-one-query-with-node-mysql/">
-                    multiple update statements separated with a semicolon
-                  </a>{" "}
-                  in your query ;)
-                </details>
-                <details>
-                  <summary className="hint">Hint 2: </summary>On the front side,
-                  you should adapt the "start" button in the top navbar. Call
-                  your API, <strong>then</strong> use the reload function.
+                  <summary className="hint">Hint: </summary>Sorry, not on this
+                  one :p
                 </details>
               </li>
 
               <li>
                 <p>
-                  Create a <code>checkTreasure()</code> service. The middleware
-                  should read `req.params.x` and `req.params.y`, and check if
-                  the boat is on the tile with the treasure. Set
-                  `req.isJackRich` to <em>true</em> or <em>false</em>{" "}
-                  accordingly, and always continue to the next middleware.
-                </p>
-                <details>
-                  <summary className="hint">Hint: </summary>Be sure to read the{" "}
-                  <code>has_treasure</code> property from the tile table.
-                </details>
-              </li>
-
-              <li>
-                <p>
-                  This service must be called <strong>on each move</strong> of
-                  the boat. Add a property to the response to let the client
-                  knows about Jack's luck.
-                </p>
-              </li>
-
-              <li>
-                <p>
-                  <strong>Bonus :</strong> Display an "endgame" page when Jack
-                  find the treasure ;)
+                  <strong>Bonus :</strong> Improve the style of the Information
+                  panel and of the NSEW links.
                 </p>
               </li>
             </ol>
