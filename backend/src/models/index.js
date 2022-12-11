@@ -9,8 +9,8 @@ const pool = mysql.createPool({
   user: DB_USER,
   password: DB_PASSWORD,
   database: DB_NAME,
-  multipleStatements: true,
   port: DB_PORT,
+  multipleStatements: true,
 });
 
 pool.getConnection().catch(() => {

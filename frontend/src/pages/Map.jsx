@@ -1,11 +1,17 @@
-import { useCaribbean } from "@contexts/CaribbeanContext";
+import { Link } from "react-router-dom";
+
+import { useCaribbean } from "../contexts/CaribbeanContext";
 
 import "./Map.css";
 
-import boatImage from "@assets/boat.png";
+import boatImage from "../assets/boat.png";
 
 function Map() {
   const { boat, tiles } = useCaribbean();
+
+  if (boat && boat.isJackRich) {
+    alert("let's drink a bottle of rhum");
+  }
 
   return (
     <div className="container-fluid">
@@ -44,10 +50,36 @@ function Map() {
           <div className="infos">
             <h2>Information</h2>
             {/* Add here informations about current ship position */}
+            {boat && (
+              <dl>
+                <dt>x</dt>
+                <dl>{boat.coord_x}</dl>
+                <dt>y</dt>
+                <dl>{boat.coord_y}</dl>
+                <dt>type</dt>
+                <dl>{boat.type}</dl>
+              </dl>
+            )}
           </div>
           <div className="navigation">
             <h2>Navigation</h2>
             {/* Add here N/S/E/W links */}
+            {boat && (
+              <>
+                <Link to={`/boat/move/${boat.coord_x}/${boat.coord_y - 1}`}>
+                  N
+                </Link>
+                <Link to={`/boat/move/${boat.coord_x}/${boat.coord_y + 1}`}>
+                  S
+                </Link>
+                <Link to={`/boat/move/${boat.coord_x + 1}/${boat.coord_y}`}>
+                  E
+                </Link>
+                <Link to={`/boat/move/${boat.coord_x - 1}/${boat.coord_y}`}>
+                  W
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

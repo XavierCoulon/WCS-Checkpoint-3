@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import propTypes from "prop-types";
 
-import api from "@services/api";
+import api from "../services/api";
 
 const caribbeanContext = createContext();
 

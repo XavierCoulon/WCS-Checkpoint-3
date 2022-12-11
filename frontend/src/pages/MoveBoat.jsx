@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { useCaribbean } from "@contexts/CaribbeanContext";
-import api from "@services/api";
+import { useCaribbean } from "../contexts/CaribbeanContext";
+import api from "../services/api";
 import Map from "./Map";
 
 function MoveBoat() {
