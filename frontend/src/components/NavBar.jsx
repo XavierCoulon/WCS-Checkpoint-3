@@ -5,7 +5,7 @@ import { useCaribbean } from "../contexts/CaribbeanContext";
 import api from "../services/api";
 
 function NavBar() {
-  const { updateBoat } = useCaribbean();
+  const { reloadBoats } = useCaribbean();
   const navigate = useNavigate();
 
   return (
@@ -37,10 +37,10 @@ function NavBar() {
             className="btn mx-2"
             onClick={() => {
               api
-                .get("/boat/start")
+                .post("/games")
                 .then((response) => {
-                  if (response.status === 200) {
-                    updateBoat(response.data);
+                  if (response.status === 201) {
+                    reloadBoats();
                   }
                 })
                 .catch((err) => {

@@ -7,15 +7,20 @@ import Map from "./Map";
 
 function MoveBoat() {
   const navigate = useNavigate();
-  const { x, y } = useParams();
-  const { updateBoat } = useCaribbean();
+  const { id, x, y } = useParams();
+  const { reloadBoats } = useCaribbean();
 
   useEffect(() => {
+    const coords = {
+      coord_x: parseInt(x, 10),
+      coord_y: parseInt(y, 10),
+    };
+
     api
-      .put(`/boat/move/${x}/${y}`)
+      .put(`/boats/${id}`, coords)
       .then((response) => {
-        if (response.status === 200) {
-          updateBoat(response.data);
+        if (response.status === 204) {
+          reloadBoats();
         }
       })
       .catch((err) => {

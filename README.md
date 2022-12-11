@@ -26,9 +26,7 @@ Run the project and read the instructions.
 npm run setup
 
 # Create 'checkpoint3' DB
-cd backend
 npm run migrate
-cd ..
 ```
 
 ## Usage

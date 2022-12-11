@@ -8,21 +8,24 @@ const caribbeanContext = createContext();
 export function CaribbeanProvider({ children }) {
   const { Provider } = caribbeanContext;
 
-  const [boat, setBoat] = useState();
+  const [boats, setBoats] = useState([]);
   const [tiles, setTiles] = useState([]);
 
-  useEffect(() => {
-    Promise.all([api.get("/tiles"), api.get("/boat")]).then((responses) => {
-      const [tilesResponse, boatResponse] = responses;
-
-      setTiles(tilesResponse.data);
-      setBoat(boatResponse.data);
+  const reloadTiles = () =>
+    api.get("/tiles").then((response) => {
+      setTiles(response.data);
     });
+  const reloadBoats = () =>
+    api.get("/boats?name=Black Pearl").then((response) => {
+      setBoats(response.data);
+    });
+
+  useEffect(() => {
+    reloadTiles();
+    reloadBoats();
   }, []);
 
-  const updateBoat = (partialBoat) => setBoat({ ...boat, ...partialBoat });
-
-  return <Provider value={{ boat, updateBoat, tiles }}>{children}</Provider>;
+  return <Provider value={{ boats, reloadBoats, tiles }}>{children}</Provider>;
 }
 
 CaribbeanProvider.propTypes = {

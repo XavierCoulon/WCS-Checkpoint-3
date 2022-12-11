@@ -11,12 +11,14 @@ CREATE TABLE tile (
   type VARCHAR(255) NOT NULL,
   coord_x INT NOT NULL,
   coord_y INT NOT NULL,
-  has_treasure BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB;
 
 INSERT INTO boat (name, coord_x, coord_y) VALUES
-('Black Pearl', 0, 0);
+('Black Pearl', 1, 1),
+('Flying Dutchman', 4, 5),
+("Queen Anne's Revenge", 10, 4),
+('The Walrus', 9, 0);
 
 INSERT INTO tile (type, coord_x, coord_y) VALUES
 ('sea', 0, 0),
