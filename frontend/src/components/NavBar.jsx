@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link, useNavigate } from "react-router-dom";
 
 import { useCaribbean } from "../contexts/CaribbeanContext";

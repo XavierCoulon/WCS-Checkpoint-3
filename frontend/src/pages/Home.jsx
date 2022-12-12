@@ -49,7 +49,7 @@ export default function Home() {
             <ol className="instructions">
               <li>
                 <p>
-                  Hello ship boy,{" "}
+                  Hello ship mate,{" "}
                   <strong>read carefully the instructions </strong> below before
                   starting to code ;)
                 </p>
