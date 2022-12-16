@@ -241,6 +241,7 @@ export default function Home() {
                     tile.
                   </li>
                   <li>Hide the treasure on a random island.</li>
+                  <li>Send back status 201 when everything is done.</li>
                 </ul>
                 <p>
                   When ready to play, hit the <em>Start</em> button in the
