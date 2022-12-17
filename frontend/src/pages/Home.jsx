@@ -135,8 +135,11 @@ export default function Home() {
 
               <li>
                 <p>
-                  Create a route to update a boat. Here is a request sample your
-                  route should be able to handle:
+                  Create a route to update a boat: this will be used by the
+                  N/S/E/W links aside the map. Once again, nothing on the
+                  frontend side: the links are already functional, and waiting
+                  for you to create the backend update route. Here is a request
+                  sample your route should be able to handle:
                 </p>
                 <blockquote>
                   <code>
