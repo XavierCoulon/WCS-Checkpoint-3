@@ -62,6 +62,8 @@ function Map() {
                 <dl>{blackPearl.coord_y}</dl>
                 <dt>type</dt>
                 <dl>{blackPearl.type}</dl>
+                <dt>treasure</dt>
+                <dl>{blackPearl.has_treasure}</dl>
               </dl>
             )}
           </div>
